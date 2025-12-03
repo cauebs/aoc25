@@ -1,5 +1,5 @@
 import aoc.{obtain_input}
-import gleam/float
+import gleam/bool
 import gleam/int
 import gleam/io
 import gleam/list
@@ -43,34 +43,42 @@ type DialState {
 
 const dial_start = DialState(pointed: 50, stops_at_zero: 0, passes_by_zero: 0)
 
+fn modular_additive_inverse(n: Int, mod m: Int) -> Int {
+  // Assuming non-negative n and m.
+  use <- bool.guard(when: n == 0, return: 0)
+  let assert Ok(n_mod_m) = int.modulo(n, m)
+  m - n_mod_m
+}
+
 fn apply_rotation(state: DialState, rotation: Rotation) -> DialState {
-  let assert Ok(pointed) =
+  let assert Ok(new_pointed) =
     case rotation {
       Left(distance:) -> state.pointed - distance
       Right(distance:) -> state.pointed + distance
     }
     |> int.modulo(numbers_in_dial)
 
-  let stops_at_zero =
-    state.stops_at_zero
-    + case pointed == 0 {
-      True -> 1
-      False -> 0
+  let new_stops_at_zero = case new_pointed == 0 {
+    True -> 1
+    False -> 0
+  }
+
+  let new_passes_by_zero = {
+    // If we reflect the dial before rotating to the left,
+    // everything else can be the same as when rotating to the right.
+    let normalized_pointed = case rotation {
+      Left(..) -> modular_additive_inverse(state.pointed, mod: numbers_in_dial)
+      Right(..) -> state.pointed
     }
 
-  let passes_by_zero =
-    state.passes_by_zero
-    + case rotation {
-      Left(distance:) if state.pointed == 0 ->
-        { numbers_in_dial - state.pointed + distance } / numbers_in_dial - 1
+    { normalized_pointed + rotation.distance } / numbers_in_dial
+  }
 
-      Left(distance:) ->
-        { numbers_in_dial - state.pointed + distance } / numbers_in_dial
-
-      Right(distance:) -> { state.pointed + distance } / numbers_in_dial
-    }
-
-  DialState(pointed:, stops_at_zero:, passes_by_zero:)
+  DialState(
+    pointed: new_pointed,
+    stops_at_zero: state.stops_at_zero + new_stops_at_zero,
+    passes_by_zero: state.passes_by_zero + new_passes_by_zero,
+  )
 }
 
 pub fn solve_part1(input: Input) -> Solution1 {
