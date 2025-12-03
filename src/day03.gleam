@@ -1,7 +1,5 @@
-import aoc.{obtain_input}
 import gleam/bool
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/order.{type Order}
 import gleam/string
@@ -82,14 +80,4 @@ pub fn solve_part1(input: Input) -> Int {
 
 pub fn solve_part2(input: Input) -> Int {
   solve(input, 12)
-}
-
-pub fn main() {
-  let input = parse(obtain_input(3))
-
-  io.print("Part 1: ")
-  echo solve_part1(input)
-
-  io.print("Part 2: ")
-  echo solve_part2(input)
 }

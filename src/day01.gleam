@@ -1,7 +1,5 @@
-import aoc.{obtain_input}
 import gleam/bool
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/string
 
@@ -89,14 +87,4 @@ pub fn solve_part2(input: Input) -> Int {
     list.fold(from: dial_start, over: input, with: apply_rotation)
 
   final_state.passes_by_zero
-}
-
-pub fn main() {
-  let input = parse(obtain_input(1))
-
-  io.print("Part 1: ")
-  echo solve_part1(input)
-
-  io.print("Part 2: ")
-  echo solve_part2(input)
 }

@@ -31,5 +31,5 @@ pub fn part2_test() {
   assert obtain_input(3)
     |> parse()
     |> solve_part2()
-    == 0
+    == 171_741_365_473_332
 }

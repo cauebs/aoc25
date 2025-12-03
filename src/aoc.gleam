@@ -1,6 +1,11 @@
+import advent
+import day01
+import day02
+import day03
 import gleam/http/request
 import gleam/httpc
 import gleam/int
+import gleam/option.{Some}
 import gleam/result
 import gleam/string
 import question.{question}
@@ -65,4 +70,47 @@ pub fn obtain_input(day: Int) -> String {
   input_path(day)
   |> simplifile.read()
   |> result.unwrap(or: download_input(day))
+}
+
+pub fn main() {
+  advent.year(2025)
+  |> advent.timed()
+  |> advent.add_day(
+    advent.Day(
+      1,
+      day01.parse,
+      day01.solve_part1,
+      Some(1118),
+      [],
+      day01.solve_part2,
+      Some(6289),
+      [],
+    ),
+  )
+  |> advent.add_day(
+    advent.Day(
+      2,
+      day02.parse,
+      day02.solve_part1,
+      Some(29_818_212_493),
+      [],
+      day02.solve_part2,
+      Some(37_432_260_594),
+      [],
+    ),
+  )
+  |> advent.add_day(
+    advent.Day(
+      3,
+      day03.parse,
+      day03.solve_part1,
+      Some(17_316),
+      [],
+      day03.solve_part2,
+      Some(171_741_365_473_332),
+      [],
+    ),
+  )
+  |> advent.add_padding_days(up_to: 12)
+  |> advent.run()
 }

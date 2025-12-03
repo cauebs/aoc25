@@ -1,6 +1,4 @@
-import aoc.{obtain_input}
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/regexp
 import gleam/string
@@ -48,14 +46,4 @@ const part2_regex = "^(\\d+)\\1+$"
 
 pub fn solve_part2(input: Input) -> Int {
   solve(input, part2_regex)
-}
-
-pub fn main() {
-  let input = parse(obtain_input(2))
-
-  io.print("Part 1: ")
-  echo solve_part1(input)
-
-  io.print("Part 2: ")
-  echo solve_part2(input)
 }
