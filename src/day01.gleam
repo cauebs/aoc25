@@ -31,10 +31,6 @@ pub fn parse(raw_input: String) -> Input {
   |> list.map(parse_rotation)
 }
 
-/// Part 1 -----------------------------------------------------------------------------------------
-pub type Solution1 =
-  Int
-
 const numbers_in_dial = 100
 
 type DialState {
@@ -81,25 +77,20 @@ fn apply_rotation(state: DialState, rotation: Rotation) -> DialState {
   )
 }
 
-pub fn solve_part1(input: Input) -> Solution1 {
+pub fn solve_part1(input: Input) -> Int {
   let final_state =
     list.fold(from: dial_start, over: input, with: apply_rotation)
 
   final_state.stops_at_zero
 }
 
-/// Part 2 -----------------------------------------------------------------------------------------
-pub type Solution2 =
-  Solution1
-
-pub fn solve_part2(input: Input) -> Solution2 {
+pub fn solve_part2(input: Input) -> Int {
   let final_state =
     list.fold(from: dial_start, over: input, with: apply_rotation)
 
   final_state.passes_by_zero
 }
 
-/// Main -------------------------------------------------------------------------------------------
 pub fn main() {
   let input = parse(obtain_input(1))
 

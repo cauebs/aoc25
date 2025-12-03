@@ -25,10 +25,6 @@ pub fn parse(raw_input: String) -> Input {
   Interval(first:, last:)
 }
 
-/// Part 1 -----------------------------------------------------------------------------------------
-pub type Solution1 =
-  Int
-
 fn numbers_in_interval(interval: Interval) -> List(Int) {
   list.range(interval.first, interval.last)
 }
@@ -44,21 +40,16 @@ fn solve(input: Input, regex: String) -> Int {
   |> int.sum()
 }
 
-pub fn solve_part1(input: Input) -> Solution1 {
+pub fn solve_part1(input: Input) -> Int {
   solve(input, part1_regex)
 }
 
-/// Part 2 -----------------------------------------------------------------------------------------
-pub type Solution2 =
-  Solution1
-
 const part2_regex = "^(\\d+)\\1+$"
 
-pub fn solve_part2(input: Input) -> Solution2 {
+pub fn solve_part2(input: Input) -> Int {
   solve(input, part2_regex)
 }
 
-/// Main -------------------------------------------------------------------------------------------
 pub fn main() {
   let input = parse(obtain_input(2))
 
